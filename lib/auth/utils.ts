@@ -1,4 +1,4 @@
-import { db } from "@/lib/db/index";
+import { db } from "@/lib/db";
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { DefaultSession, getServerSession, NextAuthOptions } from "next-auth";
 import { Adapter } from "next-auth/adapters";
@@ -33,10 +33,10 @@ export const authOptions: NextAuthOptions = {
     },
   },
   providers: [
-     GoogleProvider({
-      clientId: env.GOOGLE_CLIENT_ID,
-      clientSecret: env.GOOGLE_CLIENT_SECRET,
-    })
+    //  GoogleProvider({
+    //   clientId: env.GOOGLE_CLIENT_ID,
+    //   clientSecret: env.GOOGLE_CLIENT_SECRET,
+    // })
   ],
 };
 
