@@ -5,6 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import {PropsWithChildren} from "react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
+import s from "@/style/modules/navbar.module.scss"
 
 interface Props extends PropsWithChildren {
 }
@@ -33,18 +34,17 @@ const routes = [
 ]
 
 export default function AppLayout({children}: Props) {
-
     const pathname = usePathname()
 
     return (<main>
         {/*<NextAuthProvider>*/}
-            <header className="flex gap-5">
+            <header className={s.header}>
                 {
                     routes.map(({path, label}) => (
                         <Link
                             href={path}
                             key={path}
-                            className={pathname === path ? 'text-red-500' : ''}
+                            className={pathname === path ? s.activeLink : ''}
                         >
                             {label}
                         </Link>
