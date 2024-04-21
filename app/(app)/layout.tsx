@@ -1,11 +1,11 @@
 'use client'
 import {Toaster} from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
-import Sidebar from "@/components/Sidebar";
 import {PropsWithChildren} from "react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import s from "@/style/modules/navbar.module.scss"
+import { Button } from 'antd';
 
 interface Props extends PropsWithChildren {
 }
@@ -50,6 +50,7 @@ export default function AppLayout({children}: Props) {
                         </Link>
                     ))
                 }
+                <Button type="primary">Primary Button</Button>
             </header>
         <div className="flex h-screen">
             <div className="text-teal sm:text-primary md:text-secondary lg:text-destructive">Text</div>
