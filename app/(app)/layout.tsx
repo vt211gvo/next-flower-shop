@@ -51,13 +51,14 @@ export default function AppLayout({children}: Props) {
                     ))
                 }
             </header>
-            <div className="flex h-screen">
-                {/*<Sidebar/>*/}
-                <main className="flex-1 md:p-8 pt-2 p-8 overflow-y-auto">
-                    <Navbar/>
-                    {children}
-                </main>
-            </div>
+        <div className="flex h-screen">
+            <div className="text-teal sm:text-primary md:text-secondary lg:text-destructive">Text</div>
+            {/*<Sidebar/>*/}
+            <main className="flex-1 md:p-8 pt-2 p-8 overflow-y-auto">
+                <Navbar/>
+                {children}
+            </main>
+        </div>
         {/*</NextAuthProvider>*/}
 
         <Toaster richColors/>
