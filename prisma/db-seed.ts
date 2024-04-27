@@ -15,6 +15,7 @@ const generateUsers = async (count: number) => {
 };
 
 const generateProducts = async (count: number) => {
+    const media = await db.media.findMany()
     for (let i = 0; i < count; i++) {
         await db.product.create({
             data: {
@@ -23,12 +24,31 @@ const generateProducts = async (count: number) => {
                 price: Math.trunc(Math.random() * 1000),
                 description: faker.commerce.productDescription(),
                 article: Math.random().toString(),
+                preview: {
+                    connect: {
+                        id: media[Math.floor(Math.random() * media.length)].id,
+                    }
+                },
+                // gallery: {
+                //
+                // }
+            },
+        })
+    }
+};
+
+const generateMedia = async (count: number) => {
+    for (let i = 0; i < count; i++) {
+        await db.media.create({
+            data: {
+               path: faker.image.urlPicsumPhotos(),
             },
         })
     }
 };
 
 async function seedDb() {
+    await generateMedia(50)
     await generateUsers(50);
     await generateProducts(50);
 }

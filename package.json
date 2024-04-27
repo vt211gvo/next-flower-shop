@@ -5,16 +5,16 @@
   "scripts": {
     "dev": "env-cmd -f .env.dev next dev",
     "prod": "env-cmd -f .env.prod next dev",
-    "build:dev": "env-cmd -f .env.dev next build",
-    "start:dev": "env-cmd -f .env.dev next start",
-    "lint:dev": "env-cmd -f .env.dev next lint",
-    "db:generate:dev": "env-cmd -f .env.dev prisma generate",
+    "build": "env-cmd -f .env.dev next build",
+    "start": "env-cmd -f .env.dev next start",
+    "lint": "env-cmd -f .env.dev next lint",
+    "db:generate": "env-cmd -f .env.dev prisma generate",
+    "db:migrate": "env-cmd -f .env.dev prisma migrate dev",
     "db:push": "env-cmd -f .env.dev prisma db push",
-    "db:migrate:dev": "env-cmd -f .env.dev prisma migrate dev",
-    "db:studio:dev": "env-cmd -f .env.dev prisma studio",
+    "db:studio": "env-cmd -f .env.dev prisma studio",
     "db:seed": "env-cmd -f .env.dev ts-node prisma/db-seed.ts",
     "db:seed:prod": "env-cmd -f .env.dev ts-node prisma/db-seed.ts",
-    "stripe:listen:dev": "env-cmd -f .env.dev stripe listen --forward-to localhost:3000/api/webhooks/stripe"
+    "stripe:listen": "env-cmd -f .env.dev stripe listen --forward-to localhost:3000/api/webhooks/stripe"
   },
   "dependencies": {
     "@auth/core": "^0.30.0",

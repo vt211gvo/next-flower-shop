@@ -51,13 +51,15 @@ model Session {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String    @unique
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
 
   subscription Subscription?
+
+  @@index([email])
 }
 
 model VerificationToken {
@@ -86,7 +88,22 @@ model Product {
   description String?
   brand       String?
   article     String
+  preview     Media?  @relation(name: "productPreview")
+  gallery     Media[] @relation(name: "productGallery")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+}
+
+model Media {
+  id               String   @id @default(cuid())
+  path             String
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  productGallery   Product?  @relation(name: "productGallery", fields: [productGalleryId], references: [id])
+  productGalleryId String?   @unique
+  productPreview   Product?  @relation(name: "productPreview", fields: [productPreviewId], references: [id])
+  productPreviewId String?   @unique
+
+  @@index([path])
 }
