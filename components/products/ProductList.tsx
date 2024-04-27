@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { type Product, CompleteProduct } from "@/lib/db/schema/products";
 import Modal from "@/components/shared/Modal";
 
-import { useOptimisticProducts } from "@/app/(app)/products/useOptimisticProducts";
+import { useOptimisticProducts } from "@/app/admin/products/useOptimisticProducts";
 import { Button } from "@/components/ui/button";
 import ProductForm from "./ProductForm";
 import { PlusIcon } from "lucide-react";
