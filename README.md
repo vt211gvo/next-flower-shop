@@ -37,3 +37,6 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 ## LICENSE 
 ### MIT
+
+## POSTMAN DOCUMENTATION
+### [LINK TO POSTMAN DOCUMENTATION](https://documenter.getpostman.com/view/26441849/2sA3BuVTav)
