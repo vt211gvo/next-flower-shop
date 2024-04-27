@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 import { type Media, CompleteMedia } from "@/lib/db/schema/media";
 import Modal from "@/components/shared/Modal";
 
-import { useOptimisticMedia } from "@/app/(app)/media/useOptimisticMedia";
+import { useOptimisticMedia } from "@/app/admin/media/useOptimisticMedia";
 import { Button } from "@/components/ui/button";
 import MediaForm from "./MediaForm";
 import { PlusIcon } from "lucide-react";
