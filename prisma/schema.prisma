@@ -7,36 +7,33 @@ generator client {
 
 generator zod {
   provider              = "zod-prisma"
-  output                = "./zod" 
-  relationModel         = true 
-  modelCase             = "camelCase" 
-  modelSuffix           = "Schema" 
-  useDecimalJs          = true 
-  prismaJsonNullability = true 
+  output                = "./zod"
+  relationModel         = true
+  modelCase             = "camelCase"
+  modelSuffix           = "Schema"
+  useDecimalJs          = true
+  prismaJsonNullability = true
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
-
 model Account {
-  id                 String  @id @default(cuid())
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?  @db.Text
-  access_token       String?  @db.Text
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?  @db.Text
-  session_state      String?
-
-  
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -59,7 +56,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  
+
   subscription Subscription?
 }
 
@@ -70,6 +67,7 @@ model VerificationToken {
 
   @@unique([identifier, token])
 }
+
 model Subscription {
   userId                 String    @unique
   user                   User      @relation(fields: [userId], references: [id])
@@ -79,4 +77,16 @@ model Subscription {
   stripeCurrentPeriodEnd DateTime? @map(name: "stripe_current_period_end")
 
   @@id([userId, stripeCustomerId])
+}
+
+model Product {
+  id          String  @id @default(cuid())
+  name        String
+  price       Float?
+  description String?
+  brand       String?
+  article     String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
