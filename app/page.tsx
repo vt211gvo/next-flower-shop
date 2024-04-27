@@ -1,6 +1,21 @@
+'use client'
 import Link from "next/link";
+import {useEffect} from "react";
 
 export default function LandingPage() {
+
+  const fetchData = async () => {
+    try {
+      await fetch('/api/products'); // Replace 'your-route' with your actual API route
+    } catch (error) {
+      console.error('Error fetching data:', error);
+    }
+  };
+
+  useEffect(() => {
+    void fetchData()
+  })
+
   return (
     <div className="flex flex-col min-h-screen">
       <header className="px-4 lg:px-6 h-14 flex items-center">

@@ -12,6 +12,21 @@ import {
   insertProductParams,
   updateProductParams 
 } from "@/lib/db/schema/products";
+import {getProducts} from "@/lib/api/products/queries";
+
+export async function GET(req: Request) {
+  try {
+    const { products } = await getProducts();
+
+    return NextResponse.json(products, { status: 201 });
+  } catch (err) {
+    if (err instanceof z.ZodError) {
+      return NextResponse.json({ error: err.issues }, { status: 400 });
+    } else {
+      return NextResponse.json({ error: err }, { status: 500 });
+    }
+  }
+}
 
 export async function POST(req: Request) {
   try {

@@ -100,10 +100,10 @@ model Media {
   path             String
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
-  productGallery   Product?  @relation(name: "productGallery", fields: [productGalleryId], references: [id])
-  productGalleryId String?   @unique
-  productPreview   Product?  @relation(name: "productPreview", fields: [productPreviewId], references: [id])
-  productPreviewId String?   @unique
+  productGallery   Product? @relation(name: "productGallery", fields: [productGalleryId], references: [id])
+  productGalleryId String?  @unique
+  productPreview   Product? @relation(name: "productPreview", fields: [productPreviewId], references: [id])
+  productPreviewId String?  @unique
 
   @@index([path])
 }
