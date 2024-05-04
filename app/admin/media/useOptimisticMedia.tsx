@@ -27,6 +27,7 @@ export const useOptimisticMedia = (
 
       switch (action.action) {
         case "create":
+          //@ts-ignore
           return currentState.length === 0
             ? [optimisticMedia]
             : [...currentState, optimisticMedia];

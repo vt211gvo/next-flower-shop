@@ -1,13 +1,13 @@
 "use client";
 
 import { useOptimistic, useState } from "react";
-import { TAddOptimistic } from "@/app/(app)/media/useOptimisticMedia";
 import { type Media } from "@/lib/db/schema/media";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/shared/Modal";
 import MediaForm from "@/components/media/MediaForm";
+import {TAddOptimistic} from "@/app/admin/media/useOptimisticMedia";
 
 
 export default function OptimisticMedia({ 

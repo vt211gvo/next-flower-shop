@@ -1,13 +1,14 @@
 "use client";
 
 import { useOptimistic, useState } from "react";
-import { TAddOptimistic } from "@/app/(app)/products/useOptimisticProducts";
+// import { TAddOptimistic } from "@/app/(app)/products/useOptimisticProducts";
 import { type Product } from "@/lib/db/schema/products";
 import { cn } from "@/lib/utils";
 
 import { Button } from "@/components/ui/button";
 import Modal from "@/components/shared/Modal";
 import ProductForm from "@/components/products/ProductForm";
+import {TAddOptimistic} from "@/app/admin/products/useOptimisticProducts";
 
 
 export default function OptimisticProduct({ 

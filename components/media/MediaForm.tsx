@@ -7,7 +7,6 @@ import { toast } from "sonner";
 import { useValidatedForm } from "@/lib/hooks/useValidatedForm";
 
 import { type Action, cn } from "@/lib/utils";
-import { type TAddOptimistic } from "@/app/(app)/media/useOptimisticMedia";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -22,7 +21,7 @@ import {
   deleteMediaAction,
   updateMediaAction,
 } from "@/lib/actions/media";
-
+import { type TAddOptimistic} from "@/app/admin/media/useOptimisticMedia";
 
 const MediaForm = ({
   
