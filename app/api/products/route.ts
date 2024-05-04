@@ -13,6 +13,7 @@ import {
   updateProductParams 
 } from "@/lib/db/schema/products";
 import {getProducts} from "@/lib/api/products/queries";
+import * as Sentry from '@sentry/nextjs';
 
 export async function GET(req: Request) {
   try {
@@ -20,6 +21,7 @@ export async function GET(req: Request) {
 
     return NextResponse.json(products, { status: 201 });
   } catch (err) {
+    Sentry.captureException(err);
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {
@@ -37,6 +39,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(product, { status: 201 });
   } catch (err) {
+    Sentry.captureException(err);
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {
@@ -58,6 +61,7 @@ export async function PUT(req: Request) {
 
     return NextResponse.json(product, { status: 200 });
   } catch (err) {
+    Sentry.captureException(err);
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {
@@ -76,6 +80,7 @@ export async function DELETE(req: Request) {
 
     return NextResponse.json(product, { status: 200 });
   } catch (err) {
+    Sentry.captureException(err);
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {

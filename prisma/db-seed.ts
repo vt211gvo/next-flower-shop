@@ -1,5 +1,6 @@
 import {faker} from '@faker-js/faker';
 import {PrismaClient} from '@prisma/client';
+import * as Sentry from '@sentry/nextjs';
 
 const db = new PrismaClient();
 
@@ -58,6 +59,7 @@ seedDb()
         await db.$disconnect();
     })
     .catch(async (e) => {
+        Sentry.captureException(e);
         console.error(e);
         await db.$disconnect();
         process.exit(1);

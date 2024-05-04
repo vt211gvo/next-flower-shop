@@ -13,8 +13,6 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useBackPath } from "@/components/shared/BackButton";
 
-
-
 import { type Media, insertMediaParams } from "@/lib/db/schema/media";
 import {
   createMediaAction,
@@ -22,6 +20,7 @@ import {
   updateMediaAction,
 } from "@/lib/actions/media";
 import { type TAddOptimistic} from "@/app/admin/media/useOptimisticMedia";
+import * as Sentry from '@sentry/nextjs';
 
 const MediaForm = ({
   
@@ -106,6 +105,7 @@ const MediaForm = ({
         );
       });
     } catch (e) {
+      Sentry.captureException(e);
       if (e instanceof z.ZodError) {
         setErrors(e.flatten().fieldErrors);
       }

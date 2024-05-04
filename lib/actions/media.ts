@@ -14,8 +14,10 @@ import {
   insertMediaParams,
   updateMediaParams,
 } from "@/lib/db/schema/media";
+import * as Sentry from '@sentry/nextjs';
 
 const handleErrors = (e: unknown) => {
+  Sentry.captureException(e);
   const errMsg = "Error, please try again.";
   if (e instanceof Error) return e.message.length > 0 ? e.message : errMsg;
   if (e && typeof e === "object" && "error" in e) {
@@ -33,6 +35,7 @@ export const createMediaAction = async (input: NewMediaParams) => {
     await createMedia(payload);
     revalidateMedia();
   } catch (e) {
+    Sentry.captureException(e);
     return handleErrors(e);
   }
 };
@@ -43,6 +46,7 @@ export const updateMediaAction = async (input: UpdateMediaParams) => {
     await updateMedia(payload.id, payload);
     revalidateMedia();
   } catch (e) {
+    Sentry.captureException(e);
     return handleErrors(e);
   }
 };

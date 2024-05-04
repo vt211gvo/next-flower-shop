@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import React from "react";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import * as Sentry from '@sentry/nextjs';
 
 interface ManageUserSubscriptionButtonProps {
   userId: string;
@@ -46,6 +47,7 @@ export function ManageUserSubscriptionButton({
           window.location.href = session.url ?? "/admin/dashboard/billing";
         }
       } catch (err) {
+        Sentry.captureException(err);
         console.error((err as Error).message);
         toast.error("Something went wrong, please try again later.");
       }

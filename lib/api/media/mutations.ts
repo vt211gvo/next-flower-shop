@@ -1,4 +1,4 @@
-import { db } from "@/lib/db/index";
+import { db } from "@/lib/db";
 import { 
   MediaId, 
   NewMediaParams,
@@ -7,6 +7,7 @@ import {
   insertMediaSchema, 
   mediaIdSchema 
 } from "@/lib/db/schema/media";
+import * as Sentry from '@sentry/nextjs';
 
 export const createMedia = async (media: NewMediaParams) => {
   const newMedia = insertMediaSchema.parse(media);
@@ -14,6 +15,7 @@ export const createMedia = async (media: NewMediaParams) => {
     const m = await db.media.create({ data: newMedia });
     return { media: m };
   } catch (err) {
+    Sentry.captureException(err);
     const message = (err as Error).message ?? "Error, please try again";
     console.error(message);
     throw { error: message };
@@ -27,6 +29,7 @@ export const updateMedia = async (id: MediaId, media: UpdateMediaParams) => {
     const m = await db.media.update({ where: { id: mediaId }, data: newMedia})
     return { media: m };
   } catch (err) {
+    Sentry.captureException(err);
     const message = (err as Error).message ?? "Error, please try again";
     console.error(message);
     throw { error: message };
@@ -39,6 +42,7 @@ export const deleteMedia = async (id: MediaId) => {
     const m = await db.media.delete({ where: { id: mediaId }})
     return { media: m };
   } catch (err) {
+    Sentry.captureException(err);
     const message = (err as Error).message ?? "Error, please try again";
     console.error(message);
     throw { error: message };

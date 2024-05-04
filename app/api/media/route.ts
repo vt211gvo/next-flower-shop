@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
+import * as Sentry from '@sentry/nextjs';
 
 import {
   createMedia,
@@ -22,6 +23,7 @@ export async function POST(req: Request) {
 
     return NextResponse.json(media, { status: 201 });
   } catch (err) {
+    Sentry.captureException(err);
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {
@@ -43,6 +45,7 @@ export async function PUT(req: Request) {
 
     return NextResponse.json(media, { status: 200 });
   } catch (err) {
+    Sentry.captureException(err);
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {
@@ -61,6 +64,7 @@ export async function DELETE(req: Request) {
 
     return NextResponse.json(media, { status: 200 });
   } catch (err) {
+    Sentry.captureException(err);
     if (err instanceof z.ZodError) {
       return NextResponse.json({ error: err.issues }, { status: 400 });
     } else {

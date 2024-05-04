@@ -1,6 +1,7 @@
 'use client'
 import Link from "next/link";
 import {useEffect} from "react";
+import * as Sentry from '@sentry/nextjs';
 
 export default function LandingPage() {
 
@@ -8,6 +9,7 @@ export default function LandingPage() {
     try {
       await fetch('/api/products'); // Replace 'your-route' with your actual API route
     } catch (error) {
+      Sentry.captureException(error);
       console.error('Error fetching data:', error);
     }
   };

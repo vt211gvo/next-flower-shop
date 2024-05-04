@@ -14,9 +14,6 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useBackPath } from "@/components/shared/BackButton";
 
-
-
-
 import { type Product, insertProductParams } from "@/lib/db/schema/products";
 import {
   createProductAction,
@@ -24,10 +21,9 @@ import {
   updateProductAction,
 } from "@/lib/actions/products";
 import {TAddOptimistic} from "@/app/admin/products/useOptimisticProducts";
-
+import * as Sentry from '@sentry/nextjs';
 
 const ProductForm = ({
-  
   product,
   openModal,
   closeModal,
@@ -35,7 +31,6 @@ const ProductForm = ({
   postSuccess,
 }: {
   product?: Product | null;
-  
   openModal?: (product?: Product) => void;
   closeModal?: () => void;
   addOptimistic?: TAddOptimistic;
@@ -109,6 +104,7 @@ const ProductForm = ({
         );
       });
     } catch (e) {
+      Sentry.captureException(e);
       if (e instanceof z.ZodError) {
         setErrors(e.flatten().fieldErrors);
       }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import * as Sentry from '@sentry/nextjs';
 
 function useFetch(url: string) {
     const [data, setData] = useState<any>(null);
@@ -16,6 +17,7 @@ function useFetch(url: string) {
                 setData(res.data)
             })
             .catch((err: any) => {
+                Sentry.captureException(err);
                 setLoading(false)
                 setError(err)
             })

@@ -1,7 +1,8 @@
-import { db } from "@/lib/db/index";
-import { stripe } from "@/lib/stripe/index";
+import { db } from "@/lib/db";
+import { stripe } from "@/lib/stripe";
 import { headers } from "next/headers";
 import type Stripe from "stripe";
+import * as Sentry from '@sentry/nextjs';
 
 export async function POST(request: Request) {
   const body = await request.text();
@@ -17,6 +18,7 @@ export async function POST(request: Request) {
     );
     console.log(event.type);
   } catch (err) {
+    Sentry.captureException(err);
     return new Response(
       `Webhook Error: ${err instanceof Error ? err.message : "Unknown Error"}`,
       { status: 400 }
