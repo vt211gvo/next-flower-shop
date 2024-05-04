@@ -1,5 +1,5 @@
 import * as z from "zod"
-import { CompleteMedia, relatedMediaSchema } from "./index"
+import { CompleteMedia, relatedMediaSchema, CompleteOrder, relatedOrderSchema } from "./index"
 
 export const productSchema = z.object({
   id: z.string(),
@@ -15,6 +15,7 @@ export const productSchema = z.object({
 export interface CompleteProduct extends z.infer<typeof productSchema> {
   preview?: CompleteMedia | null
   gallery: CompleteMedia[]
+  Order: CompleteOrder[]
 }
 
 /**
@@ -25,4 +26,5 @@ export interface CompleteProduct extends z.infer<typeof productSchema> {
 export const relatedProductSchema: z.ZodSchema<CompleteProduct> = z.lazy(() => productSchema.extend({
   preview: relatedMediaSchema.nullish(),
   gallery: relatedMediaSchema.array(),
+  Order: relatedOrderSchema.array(),
 }))
