@@ -25,7 +25,7 @@ const Carts = async () => {
   await checkAuth();
 
   const { carts } = await getCarts();
-  const products = await getProducts();
+  const { products } = await getProducts();
   return (
     <Suspense fallback={<Loading />}>
       <CartList carts={carts} products={products} />

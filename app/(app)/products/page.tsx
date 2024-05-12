@@ -8,7 +8,7 @@ import Loading from "@/app/loading";
 
 export default async function OrdersPage() {
 
-    const products = await getProducts()
+    const { products } = await getProducts()
 
     return (
         <Suspense fallback={<Loading/>}>

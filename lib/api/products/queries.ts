@@ -2,7 +2,8 @@ import { db } from "@/lib/db";
 import { type ProductId, productIdSchema } from "@/lib/db/schema/products";
 
 export const getProducts = async () => {
-  return db.product.findMany({});
+  const p = await db.product.findMany({});
+  return { products: p };
 };
 
 export const getProductById = async (id: ProductId) => {

@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import {
+  addCartCount,
   addProductToCart,
   createCart,
   deleteCart,
@@ -13,7 +14,7 @@ import {
   UpdateCartParams,
   cartIdSchema,
   insertCartParams,
-  updateCartParams,
+  updateCartParams, addProductCountParams,
 } from "@/lib/db/schema/carts";
 import {ProductId, productIdSchema} from "@/lib/db/schema/products";
 
@@ -63,6 +64,16 @@ export const addProductToCartAction = async (input: ProductId) => {
   try {
     const payload = productIdSchema.parse({ id: input });
     await addProductToCart(payload.id);
+    revalidateCarts();
+  } catch (e) {
+    return handleErrors(e);
+  }
+};
+
+export const addCartCountAction = async (input: ProductId, number: number) => {
+  try {
+    const payload = addProductCountParams.parse({ id: input, number});
+    await addCartCount(payload.id, number);
     revalidateCarts();
   } catch (e) {
     return handleErrors(e);

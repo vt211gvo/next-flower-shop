@@ -25,7 +25,7 @@ const Orders = async () => {
   await checkAuth();
 
   const { orders } = await getOrders();
-  const products = await getProducts();
+  const { products } = await getProducts();
   return (
     <Suspense fallback={<Loading />}>
       <OrderList orders={orders} products={products} />

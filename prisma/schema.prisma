@@ -125,6 +125,8 @@ model Order {
   @@index([userId])
 }
 
+// Order info
+
 model Cart {
   id        String   @id @default(cuid())
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)

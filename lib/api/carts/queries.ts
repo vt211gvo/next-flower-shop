@@ -1,10 +1,20 @@
-import { db } from "@/lib/db/index";
+import { db } from "@/lib/db";
 import { getUserAuth } from "@/lib/auth/utils";
 import { type CartId, cartIdSchema } from "@/lib/db/schema/carts";
 
 export const getCarts = async () => {
   const { session } = await getUserAuth();
-  const c = await db.cart.findMany({ where: {userId: session?.user.id!}, include: { product: true}});
+  const c = await db.cart.findMany({
+    where: {
+      userId: session?.user.id!
+    },
+    include: {
+      product: true
+    },
+    orderBy: {
+      createdAt: 'asc'
+    }
+  });
   return { carts: c };
 };
 
