@@ -59,6 +59,7 @@ model User {
 
   subscription Subscription?
   orders       Order[]
+  carts        Cart[]
 
   @@index([email])
 }
@@ -95,6 +96,7 @@ model Product {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   Order     Order[]
+  Cart      Cart[]
 }
 
 model Media {
@@ -111,6 +113,19 @@ model Media {
 }
 
 model Order {
+  id        String   @id @default(cuid())
+  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  count     Int
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+}
+
+model Cart {
   id        String   @id @default(cuid())
   product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId String

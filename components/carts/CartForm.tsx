@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { useValidatedForm } from "@/lib/hooks/useValidatedForm";
 
 import { type Action, cn } from "@/lib/utils";
-import { type TAddOptimistic } from "@/app/admin/orders/useOptimisticOrders";
+import { type TAddOptimistic } from "@/app/admin/carts/useOptimisticCarts";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -23,45 +23,45 @@ import {
 } from "@/components/ui/select";
 
 
-import { type Order, insertOrderParams } from "@/lib/db/schema/orders";
+import { type Cart, insertCartParams } from "@/lib/db/schema/carts";
 import {
-  createOrderAction,
-  deleteOrderAction,
-  updateOrderAction,
-} from "@/lib/actions/orders";
+  createCartAction,
+  deleteCartAction,
+  updateCartAction,
+} from "@/lib/actions/carts";
 import { type Product, type ProductId } from "@/lib/db/schema/products";
 
-const OrderForm = ({
+const CartForm = ({
   products,
   productId,
-  order,
+  cart,
   openModal,
   closeModal,
   addOptimistic,
   postSuccess,
 }: {
-  order?: Order | null;
+  cart?: Cart | null;
   products: Product[];
   productId?: ProductId
-  openModal?: (order?: Order) => void;
+  openModal?: (cart?: Cart) => void;
   closeModal?: () => void;
   addOptimistic?: TAddOptimistic;
   postSuccess?: () => void;
 }) => {
   const { errors, hasErrors, setErrors, handleChange } =
-    useValidatedForm<Order>(insertOrderParams);
-  const editing = !!order?.id;
+    useValidatedForm<Cart>(insertCartParams);
+  const editing = !!cart?.id;
 
   const [isDeleting, setIsDeleting] = useState(false);
   const [pending, startMutation] = useTransition();
 
   const router = useRouter();
-  const backpath = useBackPath("orders");
+  const backpath = useBackPath("carts");
 
 
   const onSuccess = (
     action: Action,
-    data?: { error: string; values: Order },
+    data?: { error: string; values: Cart },
   ) => {
     const failed = Boolean(data?.error);
     if (failed) {
@@ -72,7 +72,7 @@ const OrderForm = ({
     } else {
       router.refresh();
       postSuccess && postSuccess();
-      toast.success(`Order ${action}d!`);
+      toast.success(`Cart ${action}d!`);
       if (action === "delete") router.push(backpath);
     }
   };
@@ -81,35 +81,35 @@ const OrderForm = ({
     setErrors(null);
 
     const payload = Object.fromEntries(data.entries());
-    const orderParsed = await insertOrderParams.safeParseAsync({ productId, ...payload });
-    if (!orderParsed.success) {
-      setErrors(orderParsed?.error.flatten().fieldErrors);
+    const cartParsed = await insertCartParams.safeParseAsync({ productId, ...payload });
+    if (!cartParsed.success) {
+      setErrors(cartParsed?.error.flatten().fieldErrors);
       return;
     }
 
     closeModal && closeModal();
-    const values = orderParsed.data;
-    const pendingOrder: Order = {
-      updatedAt: order?.updatedAt ?? new Date(),
-      createdAt: order?.createdAt ?? new Date(),
-      id: order?.id ?? "",
-      userId: order?.userId ?? "",
+    const values = cartParsed.data;
+    const pendingCart: Cart = {
+      updatedAt: cart?.updatedAt ?? new Date(),
+      createdAt: cart?.createdAt ?? new Date(),
+      id: cart?.id ?? "",
+      userId: cart?.userId ?? "",
       ...values,
     };
     try {
       startMutation(async () => {
         addOptimistic && addOptimistic({
-          data: pendingOrder,
+          data: pendingCart,
           action: editing ? "update" : "create",
         });
 
         const error = editing
-          ? await updateOrderAction({ ...values, id: order.id })
-          : await createOrderAction(values);
+          ? await updateCartAction({ ...values, id: cart.id })
+          : await createCartAction(values);
 
         const errorFormatted = {
           error: error ?? "Error",
-          values: pendingOrder
+          values: pendingCart
         };
         onSuccess(
           editing ? "update" : "create",
@@ -136,7 +136,7 @@ const OrderForm = ({
         >
           Product
         </Label>
-        <Select defaultValue={order?.productId} name="productId">
+        <Select defaultValue={cart?.productId} name="productId">
           <SelectTrigger
             className={cn(errors?.productId ? "ring ring-destructive" : "")}
           >
@@ -169,7 +169,7 @@ const OrderForm = ({
           type="text"
           name="count"
           className={cn(errors?.count ? "ring ring-destructive" : "")}
-          defaultValue={order?.count ?? ""}
+          defaultValue={cart?.count ?? ""}
         />
         {errors?.count ? (
           <p className="text-xs text-destructive mt-2">{errors.count[0]}</p>
@@ -192,12 +192,12 @@ const OrderForm = ({
             setIsDeleting(true);
             closeModal && closeModal();
             startMutation(async () => {
-              addOptimistic && addOptimistic({ action: "delete", data: order });
-              const error = await deleteOrderAction(order.id);
+              addOptimistic && addOptimistic({ action: "delete", data: cart });
+              const error = await deleteCartAction(cart.id);
               setIsDeleting(false);
               const errorFormatted = {
                 error: error ?? "Error",
-                values: order,
+                values: cart,
               };
 
               onSuccess("delete", error ? errorFormatted : undefined);
@@ -211,7 +211,7 @@ const OrderForm = ({
   );
 };
 
-export default OrderForm;
+export default CartForm;
 
 const SaveButton = ({
   editing,
