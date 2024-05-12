@@ -5,34 +5,34 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
-import { type Order, CompleteOrder } from "@/lib/db/schema/orders";
+import { type Cart, CompleteCart } from "@/lib/db/schema/carts";
 import Modal from "@/components/shared/Modal";
 import { type Product, type ProductId } from "@/lib/db/schema/products";
-import { useOptimisticOrders } from "@/app/admin/orders/useOptimisticOrders";
+import { useOptimisticCarts } from "@/app/admin/carts/useOptimisticCarts";
 import { Button } from "@/components/ui/button";
-import OrderForm from "./OrderForm";
+import CartForm from "./CartForm";
 import { PlusIcon } from "lucide-react";
 
-type TOpenModal = (order?: Order) => void;
+type TOpenModal = (cart?: Cart) => void;
 
-export default function OrderList({
-  orders,
+export default function CartList({
+  carts,
   products,
   productId
 }: {
-  orders: CompleteOrder[];
+  carts: CompleteCart[];
   products: Product[];
   productId?: ProductId
 }) {
-  const { optimisticOrders, addOptimisticOrder } = useOptimisticOrders(
-    orders,
+  const { optimisticCarts, addOptimisticCart } = useOptimisticCarts(
+    carts,
     products
   );
   const [open, setOpen] = useState(false);
-  const [activeOrder, setActiveOrder] = useState<Order | null>(null);
-  const openModal = (order?: Order) => {
+  const [activeCart, setActiveCart] = useState<Cart | null>(null);
+  const openModal = (cart?: Cart) => {
     setOpen(true);
-    order ? setActiveOrder(order) : setActiveOrder(null);
+    cart ? setActiveCart(cart) : setActiveCart(null);
   };
   const closeModal = () => setOpen(false);
 
@@ -41,11 +41,11 @@ export default function OrderList({
       <Modal
         open={open}
         setOpen={setOpen}
-        title={activeOrder ? "Edit Order" : "Create Order"}
+        title={activeCart ? "Edit Cart" : "Create Cart"}
       >
-        <OrderForm
-          order={activeOrder}
-          addOptimistic={addOptimisticOrder}
+        <CartForm
+          cart={activeCart}
+          addOptimistic={addOptimisticCart}
           openModal={openModal}
           closeModal={closeModal}
           products={products}
@@ -57,14 +57,14 @@ export default function OrderList({
           +
         </Button>
       </div>
-      {optimisticOrders.length === 0 ? (
+      {optimisticCarts.length === 0 ? (
         <EmptyState openModal={openModal} />
       ) : (
         <ul>
-          {optimisticOrders.map((order) => (
-            <Order
-              order={order}
-              key={order.id}
+          {optimisticCarts.map((cart) => (
+            <Cart
+              cart={cart}
+              key={cart.id}
               openModal={openModal}
             />
           ))}
@@ -74,20 +74,20 @@ export default function OrderList({
   );
 }
 
-const Order = ({
-  order,
+const Cart = ({
+  cart,
   openModal,
 }: {
-  order: CompleteOrder;
+  cart: CompleteCart;
   openModal: TOpenModal;
 }) => {
-  const optimistic = order.id === "optimistic";
-  const deleting = order.id === "delete";
+  const optimistic = cart.id === "optimistic";
+  const deleting = cart.id === "delete";
   const mutating = optimistic || deleting;
   const pathname = usePathname();
-  const basePath = pathname.includes("orders")
+  const basePath = pathname.includes("carts")
     ? pathname
-    : pathname + "/orders/";
+    : pathname + "/carts/";
 
 
   return (
@@ -99,10 +99,10 @@ const Order = ({
       )}
     >
       <div className="w-full">
-        <div>{order.productId}</div>
+        <div>{cart.productId}</div>
       </div>
       <Button variant={"link"} asChild>
-        <Link href={ basePath + "/" + order.id }>
+        <Link href={ basePath + "/" + cart.id }>
           Edit
         </Link>
       </Button>
@@ -114,14 +114,14 @@ const EmptyState = ({ openModal }: { openModal: TOpenModal }) => {
   return (
     <div className="text-center">
       <h3 className="mt-2 text-sm font-semibold text-secondary-foreground">
-        No orders
+        No carts
       </h3>
       <p className="mt-1 text-sm text-muted-foreground">
-        Get started by creating a new order.
+        Get started by creating a new cart.
       </p>
       <div className="mt-6">
         <Button onClick={() => openModal()}>
-          <PlusIcon className="h-4" /> New Orders </Button>
+          <PlusIcon className="h-4" /> New Carts </Button>
       </div>
     </div>
   );

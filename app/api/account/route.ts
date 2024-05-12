@@ -1,5 +1,5 @@
 import { getUserAuth } from "@/lib/auth/utils";
-import { db } from "@/lib/db/index";
+import { db } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
 export async function PUT(request: Request) {

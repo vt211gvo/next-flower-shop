@@ -1,6 +1,7 @@
 import {faker} from '@faker-js/faker';
 import {PrismaClient} from '@prisma/client';
 import * as Sentry from '@sentry/nextjs';
+import {connectRandom, getRandomNumber} from "../prisma/seed-utils";
 
 const db = new PrismaClient();
 
@@ -48,10 +49,40 @@ const generateMedia = async (count: number) => {
     }
 };
 
+const generateOrders = async (count: number) => {
+    const products = await db.product.findMany()
+    const users = await db.user.findMany()
+    for (let i = 0; i < count; i++) {
+        await db.order.create({
+            data: {
+                product: connectRandom(products),
+                user: connectRandom(users),
+                count: getRandomNumber(5)
+            },
+        })
+    }
+};
+
+const generateCarts = async (count: number) => {
+    const products = await db.product.findMany()
+    const users = await db.user.findMany()
+    for (let i = 0; i < count; i++) {
+        await db.cart.create({
+            data: {
+                product: connectRandom(products),
+                user: connectRandom(users),
+                count: getRandomNumber(1, 5)
+            },
+        })
+    }
+};
+
 async function seedDb() {
     await generateMedia(50)
-    await generateUsers(50);
+    await generateUsers(20);
     await generateProducts(50);
+    await generateOrders(100);
+    await generateCarts(100);
 }
 
 seedDb()
