@@ -4,6 +4,7 @@ import {MinusIcon, PlusIcon, XIcon} from "lucide-react";
 import {Product} from "@/lib/db/schema/products";
 import {useTransition} from "react";
 import {addCartCountAction, deleteCartAction} from "@/lib/actions/carts";
+import Image from "next/image";
 
 interface Props {
     cart: {
@@ -39,7 +40,7 @@ export function CartListElement({cart}: Props) {
     let {count, id, product, userId} = cart;
     return (
         <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-800 mb-2">
-            <img
+            <Image
                 alt="Product Image"
                 className="rounded-md object-cover"
                 height={80}

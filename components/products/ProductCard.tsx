@@ -4,6 +4,7 @@ import {HeartIcon, ShoppingCartIcon} from "lucide-react";
 import {useTransition} from "react";
 import {addProductToCartAction} from "@/lib/actions/carts";
 import Link from "next/link";
+import Image from "next/image";
 
 interface Props {
     product: Product;
@@ -22,7 +23,7 @@ export function ProductCard({product}: Props) {
     return (
         <div className="p-5 w-56 border rounded-md mt-5">
             <Link href={`/products/${product.id}`}>
-                <img
+                <Image
                     src="https://www.lighting.philips.com.au/content/dam/b2b-philips-lighting/ecat-fallback.png?wid=896&hei=504&qlt=82"
                     alt=""
                     className="aspect-video object-cover rounded-sm mb-2"
