@@ -65,11 +65,11 @@ export const confirmOrder = async () => {
       return accumulator + (currentValue.count * (currentValue?.product?.price ?? 0))
     }, 0)
 
-    const order = await db.order.create({
-      data: {
-
-      }
-    })
+    // const order = await db.order.create({
+    //   data: {
+    //
+    //   }
+    // })
 
   } catch (err) {
 

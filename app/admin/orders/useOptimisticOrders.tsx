@@ -29,10 +29,12 @@ export const useOptimisticOrders = (
 
       switch (action.action) {
         case "create":
+          // @ts-ignore
           return currentState.length === 0
             ? [optimisticOrder]
             : [...currentState, optimisticOrder];
         case "update":
+          // @ts-ignore
           return currentState.map((item) =>
             item.id === data.id ? { ...item, ...optimisticOrder } : item,
           );
