@@ -8,7 +8,7 @@ import Loading from "@/app/loading";
 import {Navbar} from "@/components/layout/Navbar";
 import {getUserAuth} from "@/lib/auth/utils";
 
-export default async function OrdersPage() {
+export default async function ProductsPage() {
     const { products } = await getProducts()
     const session = await getUserAuth();
 
@@ -18,7 +18,10 @@ export default async function OrdersPage() {
             <Suspense fallback={<Loading/>}>
                 <ProductsGrid>
                     {products.map((product) =>
-                        <ProductCard key={product.id} product={product}/>
+                        <ProductCard
+                            key={product.id}
+                            product={product}
+                        />
                     )}
                 </ProductsGrid>
             </Suspense>
