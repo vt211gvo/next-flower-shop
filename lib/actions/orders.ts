@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import {
+  confirmOrder,
   createOrder,
   deleteOrder,
   updateOrder,
@@ -26,6 +27,7 @@ const handleErrors = (e: unknown) => {
 };
 
 const revalidateOrders = () => revalidatePath("/orders");
+const revalidateCarts = () => revalidatePath("/carts");
 
 export const createOrderAction = async (input: NewOrderParams) => {
   try {
@@ -56,3 +58,13 @@ export const deleteOrderAction = async (input: OrderId) => {
     return handleErrors(e);
   }
 };
+
+export const confirmOrderAction = async () => {
+  try {
+    await confirmOrder();
+    revalidateOrders();
+    revalidateCarts();
+  } catch (e) {
+    handleErrors(e);
+  }
+}

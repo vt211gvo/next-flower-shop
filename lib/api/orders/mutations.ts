@@ -1,4 +1,4 @@
-import { db } from "@/lib/db/index";
+import { db } from "@/lib/db";
 import { 
   OrderId, 
   NewOrderParams,
@@ -48,4 +48,31 @@ export const deleteOrder = async (id: OrderId) => {
     throw { error: message };
   }
 };
+
+export const confirmOrder = async () => {
+  const { session } = await getUserAuth();
+  try {
+    const carts = await db.cart.findMany({
+      where: {
+        userId: session?.user.id!
+      },
+      include: {
+        product: true
+      }
+    })
+
+    const allPrice = carts.reduce((accumulator, currentValue) => {
+      return accumulator + (currentValue.count * (currentValue?.product?.price ?? 0))
+    }, 0)
+
+    const order = await db.order.create({
+      data: {
+
+      }
+    })
+
+  } catch (err) {
+
+  }
+}
 

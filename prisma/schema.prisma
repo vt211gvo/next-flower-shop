@@ -93,10 +93,11 @@ model Product {
   preview     Media?  @relation(name: "productPreview")
   gallery     Media[] @relation(name: "productGallery")
 
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Order     Order[]
-  Cart      Cart[]
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  Order         Order[]
+  Cart          Cart[]
+  OrderProducts OrderProducts[]
 }
 
 model Media {
@@ -113,19 +114,27 @@ model Media {
 }
 
 model Order {
-  id        String   @id @default(cuid())
-  product   Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  productId String
-  count     Int
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id            String          @id @default(cuid())
+  product       Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId     String
+  count         Int
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  OrderProducts OrderProducts[]
 
   @@index([userId])
 }
 
-// Order info
+model OrderProducts {
+  id        String  @id @default(cuid())
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  orderId   String
+  count     Int
+}
 
 model Cart {
   id        String   @id @default(cuid())

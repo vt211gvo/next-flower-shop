@@ -3,7 +3,7 @@ import {Button} from "@/components/ui/button";
 import {MinusIcon, PlusIcon, XIcon} from "lucide-react";
 import {Product} from "@/lib/db/schema/products";
 import {useTransition} from "react";
-import {addCartCountAction} from "@/lib/actions/carts";
+import {addCartCountAction, deleteCartAction} from "@/lib/actions/carts";
 
 interface Props {
     cart: {
@@ -30,15 +30,20 @@ export function CartListElement({cart}: Props) {
         })
     }
 
+    const removeHandler = () => {
+        startTransition(async () => {
+            await deleteCartAction(cart.id)
+        })
+    }
+
     let {count, id, product, userId} = cart;
     return (
-        <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-800">
+        <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-800 mb-2">
             <img
                 alt="Product Image"
                 className="rounded-md object-cover"
                 height={80}
-                // TODO: add image
-                // src={product.}
+                src="https://www.lighting.philips.com.au/content/dam/b2b-philips-lighting/ecat-fallback.png?wid=896&hei=504&qlt=82"
                 style={{
                     aspectRatio: "80/80",
                     objectFit: "cover",
@@ -75,10 +80,17 @@ export function CartListElement({cart}: Props) {
                             />
                         </Button>
                     </div>
-                    <div className="text-sm font-medium">$19.99</div>
+                    <div className="text-sm font-medium">
+                        ${(product?.price ?? 0) * count}
+                    </div>
                 </div>
             </div>
-            <Button className="ml-auto" size="icon" variant="ghost">
+            <Button
+                className="ml-auto"
+                size="icon"
+                variant="ghost"
+                onClick={removeHandler}
+            >
                 <XIcon className="h-5 w-5"/>
             </Button>
         </div>
