@@ -3,6 +3,7 @@ import {Button} from "@/components/ui/button";
 import {Product} from "@/lib/db/schema/products";
 import {useTransition} from "react";
 import {addCartCountAction} from "@/lib/actions/carts";
+import Image from "next/image";
 
 interface Props {
     order: {
@@ -30,7 +31,7 @@ export function OrderListElement({order}: Props) {
     let {id, product, userId} = order;
     return (
         <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-800">
-            <img
+            <Image
                 alt="Product Image"
                 className="rounded-md object-cover"
                 height={80}

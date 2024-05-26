@@ -8,7 +8,7 @@
     "prod": "env-cmd -f .env.prod next dev",
     "build": "next build",
     "start": "env-cmd -f .env.dev next start",
-    "lint": "env-cmd -f .env.dev next lint",
+    "lint": "next lint",
     "db:generate": "env-cmd -f .env.dev prisma generate",
     "db:migrate": "env-cmd -f .env.dev prisma migrate dev",
     "db:push": "env-cmd -f .env.dev prisma db push",
