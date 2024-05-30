@@ -23,7 +23,8 @@ export function ProductCard({product}: Props) {
     return (
         <div className="p-5 w-56 border rounded-md mt-5">
             <Link href={`/products/${product.id}`}>
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                     src="https://www.lighting.philips.com.au/content/dam/b2b-philips-lighting/ecat-fallback.png?wid=896&hei=504&qlt=82"
                     alt=""
                     className="aspect-video object-cover rounded-sm mb-2"

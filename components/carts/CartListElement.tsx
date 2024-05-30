@@ -40,7 +40,8 @@ export function CartListElement({cart}: Props) {
     let {count, id, product, userId} = cart;
     return (
         <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-800 mb-2">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
                 alt="Product Image"
                 className="rounded-md object-cover"
                 height={80}

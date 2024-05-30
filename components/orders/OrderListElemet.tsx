@@ -31,7 +31,8 @@ export function OrderListElement({order}: Props) {
     let {id, product, userId} = order;
     return (
         <div className="flex items-center gap-4 p-4 rounded-lg border border-gray-200 dark:border-gray-800">
-            <Image
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
                 alt="Product Image"
                 className="rounded-md object-cover"
                 height={80}
