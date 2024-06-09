@@ -15,19 +15,26 @@ export function Navbar({signedIn}: Props) {
             <nav className="flex gap-4 sm:gap-6 justify-between items-center w-full">
                 <Link
                     className="text-sm font-medium hover:underline underline-offset-4"
-                    href="/products"
+                    href="/"
                 >
                     <Image height={44} src={logo} alt="logo"/>
                 </Link>
-                <div className="flex gap-5">
+                <div className="flex gap-5 items-center">
                     {
                         signedIn
                             ? <>
                                 <Link
-                                    className="text-sm font-medium hover:underline underline-offset-4"
+                                    className="hover:underline"
+                                    href="/products"
+                                >
+                                    Products
+                                </Link>
+                                <Link
+                                    className="hover:underline"
                                     href="/cart"
                                 >
-                                    <ShoppingCartIcon/>
+                                    Cart
+                                    {/*<ShoppingCartIcon/>*/}
                                 </Link>
                                 <UserDropdown/>
                             </>

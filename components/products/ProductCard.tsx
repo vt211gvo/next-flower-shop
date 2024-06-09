@@ -4,10 +4,10 @@ import {HeartIcon, ShoppingCartIcon} from "lucide-react";
 import {useTransition} from "react";
 import {addProductToCartAction} from "@/lib/actions/carts";
 import Link from "next/link";
-import Image from "next/image";
+import {CompleteProduct} from "@/prisma/zod";
 
 interface Props {
-    product: Product;
+    product: CompleteProduct;
 }
 
 export function ProductCard({product}: Props) {
@@ -25,7 +25,7 @@ export function ProductCard({product}: Props) {
             <Link href={`/products/${product.id}`}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                    src="https://www.lighting.philips.com.au/content/dam/b2b-philips-lighting/ecat-fallback.png?wid=896&hei=504&qlt=82"
+                    src={product?.preview?.path ?? "https://www.lighting.philips.com.au/content/dam/b2b-philips-lighting/ecat-fallback.png?wid=896&hei=504&qlt=82"}
                     alt=""
                     className="aspect-video object-cover rounded-sm mb-2"
                 />
